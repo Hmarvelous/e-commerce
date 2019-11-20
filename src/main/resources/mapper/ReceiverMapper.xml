@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="online.shixun.project.module.member.mapper.ReceiverMapper">
+
+	<resultMap type="ReceiverDto" id="ReceiverDtoMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="area_address" property="areaAddress"/>
+		<result column="detailed_address" property="detailedAddress"/>
+		<result column="phone" property="phone"/>
+		<result column="zipCode" property="zipCode"/>
+		<result column="default_address" property="defaultAddress"/>
+	</resultMap>
+	<!-- 通过用户名查询该用户的四条收货地址 -->
+	<select id="selectFourReceiverByUsername" resultMap="ReceiverDtoMap">
+		SELECT
+			er.id,
+			er.name,
+			er.area_address,
+			er.detailed_address,
+			er.phone,
+			er.zipCode,
+			er.default_address
+		FROM
+			e_receiver er
+		INNER JOIN
+			e_member em
+		ON
+			er.member_id=em.id
+		WHERE
+			em.username=#{username}
+		LIMIT 4
+	</select>
+	
+	<!-- 通过用户名查询该用户的全部收货地址 -->
+	<select id="selectAllReceiverByUsername" resultMap="ReceiverDtoMap">
+		SELECT
+			er.id,
+			er.name,
+			er.area_address,
+			er.detailed_address,
+			er.phone,
+			er.zipCode,
+			er.default_address
+		FROM
+			e_receiver er
+		INNER JOIN
+			e_member em
+		ON
+			er.member_id=em.id
+		WHERE
+			em.username=#{username}
+	</select>
+	
+	<!-- 根据收货地址ID查询收货地址信息 -->
+	<select id="selectReceiverByID" resultMap="ReceiverDtoMap">
+		SELECT
+			er.id,
+			er.name,
+			er.area_address,
+			er.detailed_address,
+			er.phone,
+			er.zipCode,
+			er.default_address
+		FROM
+			e_receiver er
+		INNER JOIN
+			e_member em
+		ON
+			er.member_id=em.id
+		WHERE
+			em.username=#{username}
+		AND
+			er.id=#{id}
+	</select>
+	
+</mapper>

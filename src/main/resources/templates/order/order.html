@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>我的订单</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/static/css/order.css}">
+</head>
+<body>
+    
+    <!-- 顶部导航栏 -->
+    <div class="top-navigation-bar">
+        <div class="layui-container top-container">
+            <!-- 登录注册区域 -->
+            <p>
+                <i class="layui-icon layui-icon-home"></i><a th:href="@{/index}">商城首页</a>
+                <span>欢迎<a th:if="${username} != null" th:text="${username}"></a>来到名博商城网</span>
+                <a th:if="${username == null}" th:href="@{/member/login}">请登录</a>
+                <a th:if="${username == null}" th:href="@{/member/register}">免费注册</a>
+                <a th:if="${username != null}" th:href="@{/logout}">退出</a>
+            </p>
+
+            <!-- 小菜单区域 -->
+            <ul>
+                <li>
+                	<i class="layui-icon layui-icon-cart" style="font-size: 16px;color: #FF0036;"></i>
+                	<a th:href="@{/cart}">购物车
+                		<span th:if="${cartCount != null}" th:text="${cartCount}" id="cart-count">0</span>
+                		<span th:if="${cartCount == null}" id="cart-count">0</span>件
+                	</a>
+                </li>
+                <li><a th:href="@{/order}">我的订单</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 订单区域 -->
+    <div class="layui-container order-container">
+        <!-- 购物车头 -->
+        <div class="order-menu">
+            <ul>
+                <li class="order-menu-selected" id="-1">所有订单<a th:text="${allOrderCount}"></a></li>
+                <li id="0">待付款<a th:text="${pendingPayment}"></a></li>
+                <li id="1">待发货<a th:text="${pendingShip}"></a></li>
+                <li id="2">待收货<a th:text="${pendingReceipt}"></a></li>
+                <li id="3">待评价<a th:text="${pendingEvaluation}"></a></li>
+
+                <a class="order-recycle-bin"><i class="layui-icon layui-icon-delete"></i>订单回收站</a>
+            </ul>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+        </div>
+
+        <div class="order-data-header">
+            <ul>
+                <li>商品</li>
+                <li>单价</li>
+                <li>数量</li>
+                <li>商品参数</li>
+                <li>实付款</li>
+                <li>交易状态</li>
+                <li>交易操作</li>
+            </ul>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+        </div>
+
+
+        <!-- 简单分页 -->
+        <div class="simple-paging">
+            <a class="previousPage">上一页</a>
+            <a class="nextPage">下一页</a>
+        </div>
+
+        <!-- 数据显示区域 -->
+        <div class="show-area">
+            <ul>
+                
+            </ul>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+        </div>
+        
+        <!-- 分页区域 -->
+        <div class="paging-area">
+            <ul>
+            
+            </ul>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+        </div>
+    </div>
+
+
+	<hr class="bottom-hr">
+    <!-- 底部说明 -->
+    <div class="layui-container description-box">
+        <ul>
+            <li>
+                <span class="shorthand">优</span>
+                <span class="description"><a>品质保障</a><a>品质护航&nbsp;&nbsp;购买无忧</a></span>
+            </li>
+            <li>
+                <span class="shorthand">七</span>
+                <span class="description"><a>七天无理由退换货</a><a>为您提供售后无忧保障</a></span>
+            </li>
+            <li>
+                <span class="shorthand">特</span>
+                <span class="description"><a>特色服务体验</a><a>为您呈现不一样的服务</a></span>
+            </li>
+            <li>
+                <span class="shorthand">帮</span>
+                <span class="description"><a>帮助中心</a><a>您的购物指南</a></span>
+            </li>
+        </ul>
+    </div>
+    
+
+    <!-- 引入JS -->
+    <script th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <script th:src="@{/static/js/order.js}"></script>
+</body>
+</html>

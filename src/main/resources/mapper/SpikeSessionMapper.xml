@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+<mapper namespace="online.shixun.project.module.spike.mapper.SpikeSessionMapper">
+
+	<resultMap type="SpikeSessionDto" id="spikeSessionMap">
+		<id column="session_id" property="id"/>
+		<result column="session_name" property="name"/>
+		<result column="session_description" property="description"/>
+		<result column="session_data_lag" property="dataFlag"/>
+		<collection property="spikeCommoditys" ofType="SpikeCommodityDto" resultMap="online.shixun.project.module.spike.mapper.SpikeCommodityMapper.spikeCommodityMap"/>
+	</resultMap>
+	<!-- 查询全部有效场次 -->
+	<select id="selectAllSpikeSession" resultMap="spikeSessionMap">
+		SELECT
+			ess.id AS session_id,
+			ess.name AS session_name,
+			ess.description AS session_description,
+			ess.data_flag AS session_data_lag,
+			esc.id AS spike_commodity_id,
+			esc.price AS spike_price,
+			esc.store AS spike_store,
+			esc.description AS spike_description,
+			esc.start_time AS spike_start_time,
+			esc.data_flag AS spike_data_flag,
+			ec.id AS commodity_id,
+			ec.name,
+			ec.price,
+			ec.market_price,
+			ec.point,
+			ec.description,
+			ec.home_picture,
+			ec.screenshots,
+			ep.id AS parameter_id,
+			ep.parameter_json
+		FROM
+			e_spike_session ess
+		INNER JOIN
+			e_spike_commodity esc
+		ON
+			ess.id=esc.session_id
+		INNER JOIN
+			e_commodity ec
+		ON
+			esc.commodity_id=ec.id
+		INNER JOIN
+			e_parameter ep
+		ON
+			ec.parameter_id=ep.id
+		WHERE
+			ess.data_flag=1
+		ORDER BY
+			esc.start_time
+	</select>
+
+</mapper>

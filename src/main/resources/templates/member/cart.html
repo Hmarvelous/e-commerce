@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购物车</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/static/css/cart.css}">
+    <link rel="stylesheet" th:href="@{/static/css/pop-ups.css}">
+</head>
+<body>
+    
+    <!-- 顶部导航栏 -->
+    <div class="top-navigation-bar">
+        <div class="layui-container top-container">
+            <!-- 登录注册区域 -->
+            <p>
+                <i class="layui-icon layui-icon-home"></i><a th:href="@{/index}">商城首页</a>
+                <span>欢迎<a th:if="${username} != null" th:text="${username}"></a>来到名博商城网</span>
+                <a th:if="${username == null}" th:href="@{/member/login}">请登录</a>
+                <a th:if="${username == null}" th:href="@{/member/register}">免费注册</a>
+                <a th:if="${username != null}" th:href="@{/logout}">退出</a>
+            </p>
+
+            <!-- 小菜单区域 -->
+            <ul>
+                <li>
+                	<i class="layui-icon layui-icon-cart" style="font-size: 16px;color: #FF0036;"></i>
+                	<a th:href="@{/cart}">购物车
+                		<span th:if="${cartCount != null}" th:text="${cartCount}" id="cart-count">0</span>
+                		<span th:if="${cartCount == null}" id="cart-count">0</span>件
+                	</a>
+                </li>
+                <li><a th:href="@{/order}">我的订单</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 购物车区域 -->
+    <div>
+
+        <div class="layui-container cart-container">
+
+            <!-- 购物车头 -->
+            <div class="cart-header">
+                <ul>
+                    <li class="cart-header-selected">全部商品<a th:text="${cartCount}" class="commodity-number">0</a></li>
+                </ul>
+            </div>
+            <!-- 购物车列表头 -->
+            <div class="cart-list-header">
+                <ul>
+                    <li><input type="checkbox">全选</li>
+                    <li>商品信息</li>
+                    <li></li>
+                    <li>单价</li>
+                    <li>数量</li>
+                    <li>金额</li>
+                    <li>操作</li>
+                </ul>
+            </div>
+
+            <div class="cart-box">
+                <!-- 购物车项 -->
+                <div th:each="cartItem : ${cartItems}" class="cart-item">
+                    <ul>
+                        <li><input type="checkbox" th:data-commodity-id="${cartItem.commodity.id}"></li>
+                        <li><img th:src="@{/static/commodity/{image}(image=${cartItem.commodity.homePicture})}" alt=""><a th:href="@{/commodity/details(id=${cartItem.commodity.id})}" th:text="${cartItem.commodity.name}"></a></li>
+                        <li>
+                        	<!-- 遍历商品选定参数 -->
+                            <div class="commodity-parameter">
+                                <span th:each="parameter : ${cartItem.parameter}" th:text="${parameter.name} + ':'  + ${parameter.parameter.name}"></span>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="discard-price" th:text="@{¥{marketPrice}(marketPrice=${cartItem.commodity.marketPriceString})}">¥0.00</span>
+                            <span th:price="${cartItem.commodity.priceString}" class="unit-price" th:text="@{¥{price}(price=${cartItem.commodity.priceString})}">¥0.00</span>
+                        </li>
+                        <li>
+                        	<a class="less-number" th:commodity-id="${cartItem.commodity.id}" th:id="${cartItem.id}">-</a><input type="number" name="commodity-number" th:value="${cartItem.count}"><a class="add-number" th:commodity-id="${cartItem.commodity.id}" th:id="${cartItem.id}">+</a>
+                        </li>
+                        <li><span class="total-amount" th:price="${cartItem.commodity.price}*${cartItem.count}" th:text="@{¥{price}(price=${#numbers.formatDecimal(cartItem.commodity.price*cartItem.count, 1, 2)})}">¥0.00</span></li>
+                        <li>
+                            <a href="#" th:id="${cartItem.id}">移入收藏夹</a>
+                            <a class="delete-cart-item" href="#" th:id="${cartItem.id}">删除</a>
+                        </li>
+                    </ul>
+                    <!-- 清除浮动 -->
+                    <div class="clean"></div>
+                </div>
+
+            </div>
+            
+            
+            <!-- 统计操作区域 -->
+            <div class="statistics-operational-area">
+                <ul>
+                    <li><input type="checkbox">全选</li>
+                    <li><a class="delete-cart-item-plural" href="#">删除</a></li>
+                    <li><a href="#">移入收藏夹</a></li>
+                    <li><span>已选商品<a>0</a>件</span></li>
+                    <li>合计：<a class="statistics-amount">0.00</a></li>
+                    <li><button class="settlement-button">结&nbsp;算</button></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+
+	<hr class="bottom-hr">
+    <!-- 底部说明 -->
+    <div class="layui-container description-box">
+        <ul>
+            <li>
+                <span class="shorthand">优</span>
+                <span class="description"><a>品质保障</a><a>品质护航&nbsp;&nbsp;购买无忧</a></span>
+            </li>
+            <li>
+                <span class="shorthand">七</span>
+                <span class="description"><a>七天无理由退换货</a><a>为您提供售后无忧保障</a></span>
+            </li>
+            <li>
+                <span class="shorthand">特</span>
+                <span class="description"><a>特色服务体验</a><a>为您呈现不一样的服务</a></span>
+            </li>
+            <li>
+                <span class="shorthand">帮</span>
+                <span class="description"><a>帮助中心</a><a>您的购物指南</a></span>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- 引入JS -->
+    <script th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <script th:src="@{/static/js/pop-ups.js}"></script>
+    <script th:src="@{/static/js/cart.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+.cart-message-box{
+    position: absolute;
+    top: 70px;
+    right: 100px;
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.success-color{
+    background-color: rgba(103, 194, 58, 0.7);
+
+    animation: success 4s;
+    -moz-animation: success 4s;	/* Firefox */
+    -webkit-animation: success 4s;	/* Safari 和 Chrome */
+    -o-animation: success 4s;	/* Opera */
+}
+@keyframes success{
+    0% {background-color: rgba(103, 194, 58, 0.1); top: 40px;}
+    10% {background-color: rgba(103, 194, 58, 0.7); top: 70px;}
+    90% {background-color: rgba(103, 194, 58, 0.7); top: 70px;}
+    100% {background-color: rgba(103, 194, 58, 0.0); top: 40px;}
+}
+
+.success-color>span{
+    color: #FFF;
+    line-height: 50px;
+}
+
+
+.fail-color{
+    background-color: rgba(245, 108, 108, 0.7);
+
+    animation: fail 4s;
+    -moz-animation: fail 4s;	/* Firefox */
+    -webkit-animation: fail 4s;	/* Safari 和 Chrome */
+    -o-animation: fail 4s;	/* Opera */
+}
+@keyframes fail{
+    0% {background-color: rgba(245, 108, 108, 0.1); top: 30px;}
+    10% {background-color: rgba(245, 108, 108, 0.7); top: 70px;}
+    90% {background-color: rgba(245, 108, 108, 0.7); top: 70px;}
+    100% {background-color: rgba(245, 108, 108, 0.0); top: 30px;}
+}
+
+.fail-color>span{
+    color: #FFF;
+    line-height: 50px;
+}

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+<mapper namespace="online.shixun.project.module.order.mapper.OrderItemMapper">
+	
+	<!-- 插入订单项 -->
+	<insert id="insertOrderItem">
+		INSERT INTO
+			e_order_item(unit_price, count, actual_amount, parameter, order_item_status, commodity_id, order_id, preferential_way)
+		VALUES
+			(#{orderItem.unitPrice},
+			 #{orderItem.count},
+			 #{orderItem.actualAmount},
+			 #{orderItem.parameter},
+			 #{orderItem.orderItemStatus.ordinal},
+			 #{orderItem.commodity.id},
+			 #{orderItem.order.id},
+			 #{orderItem.preferentialWay})
+	</insert>
+	
+	<resultMap type="OrderItemDto" id="orderItemMap">
+		<id column="order_item_id" property="id"/>
+		<result column="unit_price" property="unitPrice"/>
+		<result column="count" property="count"/>
+		<result column="actual_amount" property="actualAmount"/>
+		<result column="parameter" property="parameter"/>
+		<result column="order_item_status" property="orderItemStatus" typeHandler="online.shixun.project.module.order.enumerate.OrderStatusHandler"/>
+		<result column="preferential_way" property="preferentialWay"/>
+		<collection property="commodity" ofType="CommodityDto">
+			<id column="commodity_id" property="id"/>
+			<result column="name" property="name"/>
+			<result column="price" property="price"/>
+			<result column="store" property="store"/>
+			<result column="point" property="point"/>
+			<result column="home_picture" property="homePicture"/>
+		</collection>
+	</resultMap>
+	<!-- 根据订单号查询订单项 -->
+	<select id="selectOrderItemByOrderNumber" resultMap="orderItemMap">
+		SELECT
+			eoi.id AS order_item_id,
+			eoi.unit_price,
+			eoi.count,
+			eoi.actual_amount,
+			eoi.parameter,
+			eoi.order_item_status,
+			eoi.preferential_way,
+			ec.id AS commodity_id,
+			ec.name,
+			ec.price,
+			ec.store,
+			ec.point,
+			ec.home_picture
+		FROM
+			e_order eo
+		INNER JOIN
+			e_order_item eoi
+		ON
+			eo.id=eoi.order_id
+		INNER JOIN
+			e_member em
+		ON
+			eo.member_id=em.id
+		INNER JOIN
+			e_commodity ec
+		ON
+			eoi.commodity_id=ec.id
+		WHERE
+			eo.order_number=#{orderNumber}
+		AND
+			em.username=#{username}
+	</select>
+	
+	<!-- 更新订单项状态 -->
+	<update id="updateOrderItemStatus">
+		UPDATE
+			e_order_item eoi
+		SET
+			eoi.order_item_status=#{orderItemStatus.ordinal}
+		WHERE
+			eoi.commodity_id=#{commodityId}
+		AND
+			eoi.order_id=#{orderId}
+	</update>
+	
+</mapper>

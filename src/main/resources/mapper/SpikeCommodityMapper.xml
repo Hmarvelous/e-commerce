@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+<mapper namespace="online.shixun.project.module.spike.mapper.SpikeCommodityMapper">
+
+
+	<resultMap type="SpikeCommodityDto" id="spikeCommodityMap">
+		<id column="spike_commodity_id" property="id"/>
+		<result column="spike_price" property="price"/>
+		<result column="spike_store" property="store"/>
+		<result column="spike_description" property="description"/>
+		<result column="spike_start_time" property="startTime"/>
+		<result column="spike_data_flag" property="dataFlag"/>
+		<association property="commodity" resultMap="online.shixun.project.module.commodity.mapper.CommodityMapper.detailsCommodityMap"/>
+	</resultMap>
+	<!-- 通过商品ID查询商品信息 -->
+	<select id="selectSpikeCommodityById" resultMap="spikeCommodityMap">
+		SELECT
+			esc.id AS spike_commodity_id,
+			esc.price AS spike_price,
+			esc.store AS spike_store,
+			esc.description AS spike_description,
+			esc.start_time AS spike_start_time,
+			esc.data_flag AS spike_data_flag,
+			ec.id AS commodity_id,
+			ec.name,
+			ec.price,
+			ec.market_price,
+			ec.point,
+			ec.description,
+			ec.home_picture,
+			ec.screenshots,
+			ep.id AS parameter_id,
+			ep.parameter_json
+		FROM
+			e_spike_commodity esc
+		INNER JOIN
+			e_commodity ec
+		ON
+			esc.commodity_id=ec.id
+		INNER JOIN
+			e_parameter ep
+		ON
+			ec.parameter_id=ep.id
+		WHERE
+			esc.data_flag=1
+		AND
+			esc.id=#{id}
+	</select>
+	
+	<!-- 查询全部有效秒杀商品信息 -->
+	<select id="selectAllCommoditys" resultMap="spikeCommodityMap">
+		SELECT
+			esc.id AS spike_commodity_id,
+			esc.price AS spike_price,
+			esc.store AS spike_store,
+			esc.description AS spike_description,
+			esc.start_time AS spike_start_time,
+			esc.data_flag AS spike_data_flag,
+			ec.id AS commodity_id,
+			ec.name,
+			ec.price,
+			ec.market_price,
+			ec.point,
+			ec.description,
+			ec.home_picture,
+			ec.screenshots,
+			ep.id AS parameter_id,
+			ep.parameter_json
+		FROM
+			e_spike_commodity esc
+		INNER JOIN
+			e_commodity ec
+		ON
+			esc.commodity_id=ec.id
+		INNER JOIN
+			e_parameter ep
+		ON
+			ec.parameter_id=ep.id
+		WHERE
+			esc.data_flag=1
+	</select>
+	
+	<!-- 更新秒杀商品库存 -->
+	<update id="updateSpikeCommodityStock">
+		UPDATE
+			e_spike_commodity esc
+		SET
+			esc.store=esc.store-#{count}
+		WHERE
+			esc.store-#{count}>=0
+		AND
+			esc.id=#{id}
+	</update>
+	
+	<!-- 商品库存自增1 -->
+	<update id="updateSpikeCommodityStockincrement">
+		UPDATE
+			e_spike_commodity esc
+		SET
+			esc.store=esc.store+1
+		WHERE
+			esc.id=#{id}
+	</update>
+
+</mapper>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+<mapper namespace="online.shixun.project.module.member.mapper.CartItemMapper">
+
+	<!-- 根据用户名查询购物车数量 -->
+	<select id="selectCartCountByUsername" resultType="Integer">
+		SELECT
+			COUNT(em.id)
+		FROM
+			e_member em
+		INNER	JOIN
+			e_cart_item eci
+		ON
+			em.id=eci.member_id
+		WHERE
+			em.username=#{username}
+	</select>
+	
+	
+	<resultMap type="CartItemDto" id="cartItemMap">
+		<id column="id" property="id"/>
+		<result column="count" property="count"/>
+		<result column="parameter" property="parameter"/>
+		<association property="commodity" javaType="CommodityDto">
+			<id column="commodity_id" property="id"/>
+			<result column="name" property="name"/>
+			<result column="home_picture" property="homePicture"/>
+			<result column="price" property="price"/>
+			<result column="market_price" property="marketPrice"/>
+		</association>
+	</resultMap>
+	<!-- 根据用户名查询用户购物车项集合 -->
+	<select id="selectCartItemByUsername" resultMap="cartItemMap">
+		SELECT
+			eci.id,
+			eci.count,
+			eci.parameter,
+			ec.id AS commodity_id,
+			ec.home_picture,
+			ec.name,
+			ec.price,
+			ec.market_price
+		FROM
+			e_cart_item eci
+		INNER JOIN
+			e_commodity ec
+		ON
+			eci.commodity_id=ec.id
+		INNER JOIN
+			e_member em
+		ON
+			eci.member_id=em.id
+		WHERE
+			em.username=#{username}
+	</select>
+	
+	<!-- 根据购物车项ID查询商品数量 -->
+	<select id="selectCartItemCommodityCountById" resultType="Integer">
+		SELECT
+			eci.count
+		FROM
+			e_cart_item eci
+		INNER JOIN
+			e_member em
+		ON
+			eci.member_id=em.id
+		WHERE
+			em.username=#{username}
+		AND
+			eci.commodity_id=#{commodityId}
+		AND
+			eci.id=#{id}
+	</select>
+	
+	<!-- 根据购物车项ID删除购物车项 -->
+	<delete id="deleteCartItemById">
+		DELETE FROM
+			e_cart_item
+		WHERE
+			id=#{id}
+		AND
+			member_id=
+		(SELECT
+				em.id
+			FROM
+				e_member em
+			WHERE
+				em.username=#{username})
+	</delete>
+	
+	<resultMap type="CartItemDto" id="simpleCartItemMap">
+		<id column="id" property="id"/>
+		<result column="count" property="count"/>
+	</resultMap>
+	<!-- 根据商品ID以及用户ID查询该用户购物车项 -->
+	<select id="selectCartItemByCommodityAndMember" resultMap="simpleCartItemMap">
+		SELECT
+			eci.id,
+			eci.count,
+			eci.parameter
+		FROM
+			e_cart_item eci
+		WHERE
+			eci.commodity_id=#{commodityId}
+		AND
+			eci.member_id=#{memberId}
+		AND
+			eci.parameter=#{parameter}
+	</select>
+	
+	<!-- 添加购物车项选定参数 -->
+	<insert id="addCartItem">
+		INSERT
+			e_cart_item(count, commodity_id, member_id, parameter)
+		VALUES
+			(#{count}, #{commodityId}, #{memberId}, #{parameter})
+	</insert>
+
+	<!-- 更新购物车项 -->
+	<update id="updateCartItem">
+		UPDATE
+			e_cart_item eci
+		SET
+			eci.count=#{count}
+		WHERE
+			eci.commodity_id=#{commodityId}
+		AND
+			eci.member_id=#{memberId}
+		AND
+			eci.parameter=#{parameter}
+	</update>
+
+</mapper>

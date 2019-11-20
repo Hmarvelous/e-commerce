@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:text="${commodity.name}">商品详情页面</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/static/css/details.css}">
+    <link rel="stylesheet" th:href="@{/static/css/pop-ups.css}">
+</head>
+<body>
+    
+    <!-- 顶部导航栏 -->
+    <div class="top-navigation-bar">
+        <div class="layui-container top-container">
+            <!-- 登录注册区域 -->
+            <p>
+                <i class="layui-icon layui-icon-home"></i><a th:href="@{/index}">商城首页</a>
+                <span>欢迎<a th:if="${username} != null" th:text="${username}"></a>来到名博商城网</span>
+                <a th:if="${username == null}" th:href="@{/member/login}">请登录</a>
+                <a th:if="${username == null}" th:href="@{/member/register}">免费注册</a>
+                <a th:if="${username != null}" th:href="@{/logout}">退出</a>
+            </p>
+
+            <!-- 小菜单区域 -->
+            <ul>
+                <li>
+                	<i class="layui-icon layui-icon-cart" style="font-size: 16px;color: #FF0036;"></i>
+                	<a th:href="@{/cart}">购物车
+                		<span th:if="${cartCount != null}" th:text="${cartCount}" id="cart-count">0</span>
+                		<span th:if="${cartCount == null}" id="cart-count">0</span>件
+                	</a>
+                </li>
+                <li><a th:href="@{/order}">我的订单</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 搜索框区域 -->
+    <div class="search-bar">
+        <div class="layui-container search-back">
+            <!-- LOGO -->
+            <div class="logo-box"><img th:src="@{/static/logo.png}" alt=""></div>
+            <!-- 搜索框 -->
+            <div class="search-box">
+                <input type="search" name="commodityKeyword" placeholder="搜索  商品"><button>搜&nbsp;&nbsp;索</button>
+            </div>
+
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+        </div>
+    </div>
+
+
+
+    <!-- 商品详情区域 -->
+    <div class="layui-container details-box" th:id="${commodity.id}">
+        <!-- 商品图片浏览区域 -->
+        <div class="image-box">
+            <!-- 主图 -->
+            <div class="main-image"><img th:if="${commodity.screenshotList.size()>0}" th:src="@{/static/commodity/{image}(image=${commodity.screenshotList.get(0)})}" alt=""></div>
+
+            <!-- 小图 -->
+            <div class="small-image">
+                <ul>
+                    <li th:each="smallImage, smallImageStat : ${commodity.screenshotList}">
+                    	<img th:src="@{/static/commodity/small/{image}(image=${smallImage})}" alt="" th:class="${smallImageStat.index==0} ? 'small-image-selected' : ''">
+                    </li>
+
+                </ul>
+                <!-- 清除浮动 -->
+                <div class="clean"></div>
+            </div>
+
+            <!-- 收藏按钮 -->
+            <div class="collection-box"><i class="layui-icon layui-icon-rate-solid"></i><a>收藏商品</a><span>(<a>3</a>人气)</span></div>
+        </div>
+
+        <!-- 商品信息区域 -->
+        <div class="commodity-info-box">
+        	<input type="hidden" id="commodityId" th:value="${commodity.id}"/>
+            <!-- 商品名称 -->
+            <div class="commodity-name">
+                <span th:text="${commodity.name}"></span>
+            </div>
+            <!-- 商品简介 -->
+            <div class="commodity-introduction">
+                <span th:text="${commodity.description}"></span>
+            </div>
+            <!-- 商品价格 -->
+            <div class="commodity-price">
+                <span class="member-price">会员价<a th:price="${commodity.priceString}" th:text="@{¥{price}(price=${commodity.priceString})}"></a></span>
+                <span class="market-price">市场价<a th:text="@{¥{price}(price=${commodity.marketPriceString})}"></a></span>
+            </div>
+            <!-- 评论与积分 -->
+            <div class="comment-and-point">
+                <span>累积评论<a th:text="${allComment}"></a></span>
+                <i></i>
+                <span>赠送积分<a th:text="${commodity.point}"></a></span>
+            </div>
+            <!-- 参数选择 -->
+            <div th:if="${commodity.parameters != null}">
+            	<div th:each="parameter : ${commodity.parameters.parameterJson}">
+		            <div class="parameter-option">
+		                <span th:text="${parameter.name}"></span>
+		                <ul>
+		                    <li th:each="p, pStat : ${parameter.parameters}" th:class="${pStat.index==0} ? 'parameter-selected' : ''" th:text="${p.name}" th:price="${p.price}"></li>
+		                </ul>
+		                <!-- 清除浮动 -->
+		                <div class="clean"></div>
+		            </div>
+		            <br/>
+	            </div>
+            </div>
+            
+            <!-- 数量选择 -->
+            <div class="quantity-selection">
+                <span>数量</span>
+                <input type="number" id="commodity-count" value="1">
+                <div>
+                    <i class="layui-icon layui-icon-up add-count"></i>
+                    <i class="layui-icon layui-icon-down cut-back-count"></i>
+                </div>
+            </div>
+
+            <!-- 按钮区域 -->
+            <div class="button-box">
+                <button class="buy-button">立即购买</button>
+                <button class="add-cart"><i class="layui-icon layui-icon-cart"></i>加入购物车</button>
+            </div>
+        </div>
+
+        <!-- 推荐同类商品区域 -->
+
+
+        <!-- 推荐同类商品区域 -->
+
+        <!-- 清除浮动 -->
+        <div class="clean"></div>
+    </div>
+
+
+    <!-- 商品评论区域 -->
+    <div class="layui-container comment-box">
+        <div class="comment-title"><span>累计评论<a th:text="${allComment}"></a></span></div>
+        <!-- 选择评论类型 -->
+        <div class="comment-type">
+            <ul>
+                <li><input type="radio" name="comment-radio" value="-1" checked><span>全部(<a th:text="${allComment}"></a>)</span></li>
+                <li><input type="radio" name="comment-radio" value="0"><span>好评(<a th:text="${praise}"></a>)</span></li>
+                <li><input type="radio" name="comment-radio" value="1"><span>中评(<a th:text="${average}"></a>)</span></li>
+                <li><input type="radio" name="comment-radio" value="2"><span>差评(<a th:text="${badReview}"></a>)</span></li>
+            </ul>
+        </div>
+
+        <!-- 评论区域 -->
+        <div class="comment-area">
+            <!-- 评论项 -->
+            <ul>
+                
+            </ul>
+
+            <!-- 评论分页 -->
+            <div class="comment-pagination">
+                <ul>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+	<hr class="bottom-hr">
+    <!-- 底部说明 -->
+    <div class="layui-container description-box">
+        <ul>
+            <li>
+                <span class="shorthand">优</span>
+                <span class="description"><a>品质保障</a><a>品质护航&nbsp;&nbsp;购买无忧</a></span>
+            </li>
+            <li>
+                <span class="shorthand">七</span>
+                <span class="description"><a>七天无理由退换货</a><a>为您提供售后无忧保障</a></span>
+            </li>
+            <li>
+                <span class="shorthand">特</span>
+                <span class="description"><a>特色服务体验</a><a>为您呈现不一样的服务</a></span>
+            </li>
+            <li>
+                <span class="shorthand">帮</span>
+                <span class="description"><a>帮助中心</a><a>您的购物指南</a></span>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- 引入JS -->
+    <script th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <script th:src="@{/static/js/pop-ups.js}"></script>
+    <script th:src="@{/static/js/details.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,271 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.layui-container{
+    padding: 0;
+}
+
+.clean{
+    clear: both;
+}
+
+/* 顶部导航栏开始 */
+.top-navigation-bar{
+    height: 32px;
+    background-color: #F2F2F2;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.top-container{
+    height: 32px;
+}
+.top-container>p{
+    float: left;
+    font-size: 13px;
+    color: #999999;
+    line-height: 32px;
+}
+.top-container>p>span{
+    padding-right: 5px;
+}
+.top-container>p>span>a{
+	color: #666;
+	padding: 0 5px;
+    cursor: pointer;
+	font-size: 13px;
+}
+.top-container>p>span>a:hover{
+	color: #666;
+}
+.top-container>p>a{
+    color: #999999;
+    padding: 0 6px;
+}
+.top-container>p>i{
+    font-size: 15px;
+    color: #FF0036;
+}
+.top-container>p>a:hover{
+    color: #FF0036;
+    text-decoration: underline;
+}
+
+/* 小菜单区域 */
+.top-container>ul{
+    float: right;
+    font-size: 13px;
+    color: #999999;
+}
+.top-container>ul>li{
+    padding: 0 10px;
+    line-height: 32px;
+    display: inline-block;
+}
+.top-container>ul>li>a:hover{
+    color: #FF0036;
+    text-decoration: underline;
+}
+.top-container>ul>li>a:hover > span{
+    color: #FF0036;
+}
+.top-container>ul>li>a{
+    color: #999999;
+}
+.top-container>ul>li>i{
+    padding-right: 3px;
+}
+.top-container>ul>li>span{
+    padding: 0 2px;
+    color: #666666;
+    font-weight: bold;
+}
+.top-container>ul>li>a>span{
+	color: #000;
+    padding: 0 2px;
+	font-size: 14px;
+    font-weight: bold;
+}
+/* 顶部导航栏结束 */
+
+
+/* 注册区域开始 */
+.register-area{
+    height: 500px;
+    margin-top: 140px;
+}
+
+.register-box{
+    position: relative;
+    top: 10px;
+    width: 500px;
+    margin: 0 auto;
+    border-radius: 3px;
+    text-align: center;
+    box-shadow: 0 0 6px 1px #EEE;
+}
+
+.register-box>div{
+    padding: 10px 0;
+}
+
+.register-title{
+    height: 40px;
+    width: 400px;
+    margin: 0 auto 10px auto;
+    border-bottom: 1px solid #0099FF;
+}
+
+.input-item>span{
+    display: inline-block;
+    text-align: right;
+    width: 15%;
+}
+
+.input-item>input{
+    width: 45%;
+    height: 26px;
+    padding: 0 10px;
+    margin-left: 10px;
+}
+
+.register-title>span{
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 45px;
+}
+
+.register-box>div>input[type=checkbox]{
+    position: relative;
+    top: 1px;
+    right: 3px;
+}
+
+.register-box>div>button{
+    position: relative;
+    left: 115px;
+    width: 100px;
+    height: 30px;
+    border: none;
+    outline: none;
+    color: #FFF;
+    cursor: pointer;
+    margin-bottom: 20px;
+    background-color: #0099FF;
+}
+
+.register-box>div>button:hover{
+    opacity: 0.6;
+}
+
+.button-invalid{
+    cursor: not-allowed !important;
+    background-color: #CCC !important;
+}
+
+.button-invalid:hover{
+    opacity: 1 !important;
+}
+/* 注册区域结束 */
+
+
+/* 底部说明开始 */
+.bottom-hr{
+    margin-top: 80px;
+}
+.description-box{
+    height: 100px;
+    margin-bottom: 50px;
+}
+.description-box>ul>li{
+    float: left;
+    width: 290px;
+    height: 100px;
+    margin: 0 1px;
+    text-align: center;
+}
+.description-box>ul>li>span.shorthand{
+    display: block;
+    float: left;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    color: #FF0036;
+    margin-top: 25px;
+    font-weight: bold;
+    line-height: 45px;
+    margin-left: 40px;
+    border-radius: 25px;
+    border: 2px solid #FF0036;
+}
+.description-box>ul>li>span.description{
+    float: left;
+    margin-top: 25px;
+    margin-left: 15px;
+}
+.description-box>ul>li>span.description>a{
+    line-height: 25px;
+    text-align: left;
+}
+.description-box>ul>li>span.description>a:first-child{
+    display: block;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+}
+.description-box>ul>li>span.description>a:nth-child(2){
+    color: #999;
+    font-size: 15px;
+    font-weight: bold;
+}
+/* 底部说明结束 */
+
+
+/* 提示框开始 */
+.prompt-box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(102, 102, 102, 0.1)
+}
+
+.tip-window{
+    position: fixed;
+    top: 30%;
+    left: 45%;
+    border-radius: 2;
+    padding: 20px 40px;
+    text-align: center;
+    background-color: #FFF;
+    box-shadow: 0 0 6px 2px #CCC;
+}
+
+
+.tip-window>span{
+    display: block;
+    padding-bottom: 20px;
+}
+
+.tip-window>button{
+    width: 80px;
+    height: 30px;
+    border: none;
+    outline: none;
+    color: #FFF;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: #0099FF;
+}
+
+.tip-window>button:hover{
+    opacity: 0.6;
+}
+
+.tip-window>button>a{
+    color: #FFF;
+    padding-left: 4px;
+}
+/* 提示框结束 */

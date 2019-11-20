@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+<mapper namespace="online.shixun.project.module.commodity.mapper.SortMapper">
+
+	<resultMap type="SortDto" id="sortMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="image" property="image"/>
+	</resultMap>
+	<!-- 根据父级分类ID获取商品分类信息 -->
+	<select id="selectSortsByParentId" parameterType="Long" resultMap="sortMap">
+		SELECT
+			es.id,
+			es.name,
+			es.image
+		FROM
+			e_sort es
+		WHERE
+			1=1
+		<if test="parentId == null">
+			AND parent_sort_id IS NULL
+		</if>
+		<if test="parentId != null">
+			AND parent_sort_id = #{parentId}
+		</if>
+	</select>
+	
+	<!-- 根据分类父级ID查询第一个分类ID -->
+	<select id="selectSortIdByParentId" resultType="Long">
+		SELECT
+			es.id
+		FROM
+			e_sort e
+		INNER JOIN
+			e_sort es
+		ON
+			e.id=es.parent_sort_id
+		WHERE
+			e.id=#{parentId}
+		LIMIT 1
+	</select>
+
+</mapper>

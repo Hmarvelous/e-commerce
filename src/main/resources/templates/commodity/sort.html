@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分类</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/static/css/sort.css}">
+</head>
+<body>
+    
+    <!-- 顶部导航栏 -->
+    <div class="top-navigation-bar">
+        <div class="layui-container top-container">
+            <!-- 登录注册区域 -->
+            <p>
+                <i class="layui-icon layui-icon-home"></i><a th:href="@{/index}">商城首页</a>
+                <span>欢迎<a th:if="${username} != null" th:text="${username}"></a>来到名博商城网</span>
+                <a th:if="${username == null}" th:href="@{/member/login}">请登录</a>
+                <a th:if="${username == null}" th:href="@{/member/register}">免费注册</a>
+                <a th:if="${username != null}" th:href="@{/logout}">退出</a>
+            </p>
+
+            <!-- 小菜单区域 -->
+            <ul>
+                <li>
+                	<i class="layui-icon layui-icon-cart" style="font-size: 16px;color: #FF0036;"></i>
+                	<a th:href="@{/cart}">购物车
+                		<span th:if="${cartCount != null}" th:text="${cartCount}" id="cart-count">0</span>
+                		<span th:if="${cartCount == null}" id="cart-count">0</span>件
+                	</a>
+                </li>
+                <li><a th:href="@{/order}">我的订单</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <!-- 分类区域 -->
+    <div th:data-sort-id="${primaryId}" class="layui-container sort-area">
+        <ul>
+            <li th:each="sort : ${secondarySort}" th:class="${sort.id == minorId} ? 'sort-selected' : ''" th:data-sort-id="${sort.id}" th:text="${sort.name}"></li>
+        </ul>
+        <!-- 清除浮动 -->
+        <div class="clean"></div>
+        <div class="secondary-menu">
+            <ul>
+                <li th:class="${sortId == -1} ? 'sort-selected' : ''" data-sort-id="-1">全部</li>
+                <li th:each="sort : ${thirdSort}" th:class="${sortId == sort.id} ? 'sort-selected' : ''" th:data-sort-id="${sort.id}" th:text="${sort.name}"></li>
+            </ul>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+        </div>
+    </div>
+
+
+    <!-- 商品显示区域 -->
+    <div class="layui-container comm-show-area">
+        <ul>
+            <!-- 商品项 -->
+            <li th:each="commodity : ${commodityPage.list}" th:data-comm-id="${commodity.id}">
+                <img th:src="@{/static/commodity/{image}(image=${commodity.homePicture})}" alt="">
+                <span class="comm-price">¥<a th:text="${commodity.priceString}"></a></span>
+                <a th:href="@{/commodity/details(id=${commodity.id})}" class="comm-name" th:text="${commodity.name}"></a>
+            </li>
+        </ul>
+
+        <!-- 清除浮动 -->
+        <div class="clean"></div>
+    </div>
+
+	<div th:if="${commodityPage.list.size() == 0}" class="layui-container not-commodity-info"><span>暂无商品信息</span></div>
+
+    <!-- 分页区域 -->
+    <div class="layui-container pagination-area">
+        <ul>
+            <li th:class="${commodityPage.hasPreviousPage} ? '' : 'pagination-disable'">上一页</li>
+            <li th:each="p : ${commodityPage.navigatepageNums}" th:class="${p == commodityPage.pageNum} ? 'pagination-selected' : ''" th:text="${p}"></li>
+            <li th:class="${commodityPage.hasNextPage} ? '' : 'pagination-disable'">下一页</li>
+        </ul>
+    </div>
+
+
+    <hr class="bottom-hr">
+    <!-- 底部说明 -->
+    <div class="layui-container description-box">
+        <ul>
+            <li>
+                <span class="shorthand">优</span>
+                <span class="description"><a>品质保障</a><a>品质护航&nbsp;&nbsp;购买无忧</a></span>
+            </li>
+            <li>
+                <span class="shorthand">七</span>
+                <span class="description"><a>七天无理由退换货</a><a>为您提供售后无忧保障</a></span>
+            </li>
+            <li>
+                <span class="shorthand">特</span>
+                <span class="description"><a>特色服务体验</a><a>为您呈现不一样的服务</a></span>
+            </li>
+            <li>
+                <span class="shorthand">帮</span>
+                <span class="description"><a>帮助中心</a><a>您的购物指南</a></span>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- 引入JS -->
+    <script th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/static/js/sort.js}"></script>
+
+</body>
+</html>

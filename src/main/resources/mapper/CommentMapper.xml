@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+<mapper namespace="online.shixun.project.module.commodity.mapper.CommentMapper">
+
+	<resultMap type="CommentDto" id="commentMap">
+		<id column="id" property="id"/>
+		<result column="content" property="content"/>
+		<result column="comment_date" property="commentDate"/>
+		<result column="level" property="commentLevel"/>
+		<association property="member" javaType="MemberDto">
+			<id column="member_id" property="id"/>
+			<result column="username" property="username"/>
+		</association>
+	</resultMap>
+	<!-- 根据评论等级全部评论信息 -->
+	<select id="selectAllCommentsByLevel" resultMap="commentMap">
+		SELECT
+			ec.id,
+			ec.content,
+			ec.comment_date,
+			ec.level,
+			em.id AS member_id,
+			em.username
+		FROM
+				e_comment ec
+		INNER JOIN
+			e_member em
+		ON
+			ec.member_id=em.id
+		WHERE
+			ec.commodity_id=#{commodityId}
+		<if test="level != null">
+			AND ec.level=#{level}
+		</if>
+	</select>
+	
+	<!-- 根据评论等级以及商品ID评论数量 -->
+	<select id="selectAllCommentsCountByLevel" resultType="Integer">
+		SELECT
+			COUNT(id)
+		FROM
+			e_comment ec
+		WHERE
+			ec.commodity_id=#{commodityId}
+		<if test="level != null">
+			AND ec.level=#{level}
+		</if>
+	</select>
+	
+	<!-- 根据商品ID插入商品评论信息 -->
+	<insert id="insertCommentByCommentId">
+		INSERT INTO
+			e_comment(content,comment_date,level,member_id,commodity_id)
+		VALUES
+			(#{comment.content},#{comment.commentDate},#{comment.commentLevel},#{comment.member.id},#{commodityId})
+	</insert>
+	
+</mapper>

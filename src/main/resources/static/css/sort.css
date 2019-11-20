@@ -1,0 +1,294 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.layui-container{
+    padding: 0;
+}
+
+.clean{
+    clear: both;
+}
+
+/* 顶部导航栏开始 */
+.top-navigation-bar{
+    height: 32px;
+    background-color: #F2F2F2;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.top-container{
+    height: 32px;
+}
+.top-container>p{
+    float: left;
+    font-size: 13px;
+    color: #999999;
+    line-height: 32px;
+}
+.top-container>p>span{
+    padding-right: 5px;
+}
+.top-container>p>span>a{
+	color: #666;
+	padding: 0 5px;
+    cursor: pointer;
+	font-size: 13px;
+}
+.top-container>p>span>a:hover{
+	color: #666;
+}
+.top-container>p>a{
+    color: #999999;
+    padding: 0 6px;
+}
+.top-container>p>i{
+    font-size: 15px;
+    color: #FF0036;
+}
+.top-container>p>a:hover{
+    color: #FF0036;
+    text-decoration: underline;
+}
+
+/* 小菜单区域 */
+.top-container>ul{
+    float: right;
+    font-size: 13px;
+    color: #999999;
+}
+.top-container>ul>li{
+    padding: 0 10px;
+    line-height: 32px;
+    display: inline-block;
+}
+.top-container>ul>li>a:hover{
+    color: #FF0036;
+    text-decoration: underline;
+}
+.top-container>ul>li>a:hover > span{
+    color: #FF0036;
+}
+.top-container>ul>li>a{
+    color: #999999;
+}
+.top-container>ul>li>i{
+    padding-right: 3px;
+}
+.top-container>ul>li>span{
+    padding: 0 2px;
+    color: #666666;
+    font-weight: bold;
+}
+.top-container>ul>li>a>span{
+	color: #000;
+    padding: 0 2px;
+	font-size: 14px;
+    font-weight: bold;
+}
+/* 顶部导航栏结束 */
+
+
+/* 分类区域开始 */
+.sort-area{
+    margin-top: 80px;
+    padding-top: 20px;
+    border-top: 2px solid #01AAED;
+}
+.sort-area>ul>li{
+    float: left;
+    height: 26px;
+    color: #666;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 0 10px;
+    line-height: 26px;
+    border-radius: 10px;
+    -moz-user-select:none;
+    background-color: #EEE;
+    -webkit-user-select:none;
+}
+.sort-area>ul>li:hover{
+    color: #01AAED;
+}
+.sort-selected{
+    color: #FF0036 !important;
+}
+.secondary-menu{
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #EEE;
+}
+.secondary-menu>ul>li{
+    float: left;
+    height: 26px;
+    color: #666;
+    margin: 4px 5px;
+    cursor: pointer;
+    padding: 0 10px;
+    font-size: 14px;
+    line-height: 26px;
+    border-radius: 2px;
+    -moz-user-select:none;
+    border: 1px solid #EEE;
+    -webkit-user-select:none;
+}
+.secondary-menu>ul>li:hover{
+    color: #01AAED;
+    border: 1px solid #01AAED;
+}
+/* 分类区域结束 */
+
+
+
+/* 商品显示区域开始 */
+.comm-show-area{
+    margin-top: 50px;
+    border-radius: 2px;
+}
+.comm-show-area>ul>li{
+    float: left;
+    width: 208px;
+    padding: 5px;
+    height: 280px;
+    cursor: pointer;
+    margin: 0 14px 14px 0px;
+    border: 1px solid #EEE;
+}
+.comm-show-area>ul>li:hover{
+    border: 1px solid #FF0036;
+}
+.comm-show-area>ul>li>img{
+    width: 207px;
+    height: 207px;
+}
+.comm-show-area>ul>li>span.comm-price{
+    height: 30px;
+    margin-top: 5px;
+    display: block;
+    font-size: 15px;
+    color: #FF0036;
+    line-height: 30px;
+}
+.comm-show-area>ul>li>span.comm-price>a{
+    font-size: 20px;
+    color: #FF0036;
+    font-weight: bold;
+}
+.comm-show-area>ul>li>a.comm-name{
+    display: block;
+    font-size: 12px;
+    height: 33px;
+    overflow: hidden;
+}
+.comm-show-area>ul>li>a.comm-name:hover{
+    color: #FF0036;
+    text-decoration: underline;
+}
+.comm-show-area>ul>li>div.comm-info{
+    height: 20px;
+    background-color: red;
+}
+.not-commodity-info{
+    text-align: center;
+}
+.not-commodity-info>span{
+    font-size: 18px;
+    color: #AAA;
+}
+/* 商品显示区域结束 */
+
+
+
+/* 分页区域开始 */
+.pagination-area{
+    height: 37px;
+    margin-top: 35px;
+}
+.pagination-area>ul>li{
+    float: left;
+    height: 35px;
+    margin: 0 3px;
+    cursor: pointer;
+    padding: 0 15px;
+    line-height: 35px;
+    border-radius: 1px;
+    -moz-user-select:none;
+    -webkit-user-select:none;
+    border: 1px solid #CCC;
+}
+.pagination-area>ul>li:hover{
+    color: #FFF;
+    background-color: #01AAED;
+    border: 1px solid #01AAED;
+}
+.pagination-disable{
+    opacity: .5;
+    cursor: no-drop !important;
+}
+.pagination-disable:hover{
+    color: #000 !important;
+    background-color: #FFF !important;
+    border: 1px solid #CCC !important;
+}
+.pagination-selected{
+    color: #FFF;
+    background-color: #01AAED;
+    border: 1px solid #01AAED !important;
+}
+/* 分页区域结束 */
+
+
+
+/* 底部说明开始 */
+.bottom-hr{
+    margin-top: 80px;
+}
+.description-box{
+    height: 100px;
+    margin-bottom: 50px;
+}
+.description-box>ul>li{
+    float: left;
+    width: 290px;
+    height: 100px;
+    margin: 0 1px;
+    text-align: center;
+}
+.description-box>ul>li>span.shorthand{
+    display: block;
+    float: left;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    color: #FF0036;
+    margin-top: 25px;
+    font-weight: bold;
+    line-height: 45px;
+    margin-left: 40px;
+    border-radius: 25px;
+    border: 2px solid #FF0036;
+}
+.description-box>ul>li>span.description{
+    float: left;
+    margin-top: 25px;
+    margin-left: 15px;
+}
+.description-box>ul>li>span.description>a{
+    line-height: 25px;
+    text-align: left;
+}
+.description-box>ul>li>span.description>a:first-child{
+    display: block;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+}
+.description-box>ul>li>span.description>a:nth-child(2){
+    color: #999;
+    font-size: 15px;
+    font-weight: bold;
+}
+/* 底部说明结束 */

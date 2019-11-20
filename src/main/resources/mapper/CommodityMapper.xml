@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+<mapper namespace="online.shixun.project.module.commodity.mapper.CommodityMapper">
+
+	<resultMap type="CommodityDto" id="indexCommodityMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="price" property="price"/>
+		<result column="home_picture" property="homePicture"/>
+	</resultMap>
+	<!-- 查询五条热门商品基本信息 -->
+	<select id="selectHotFivesCommoditys" resultMap="indexCommodityMap">
+		SELECT
+			ec.id,
+			ec.name,
+			ec.price,
+			ec.home_picture
+		FROM
+			e_commodity ec
+		WHERE
+			ec.put_shelves=1
+		AND
+			ec.hot=1
+		LIMIT
+			5
+	</select>
+
+	<!-- 查询五条新品商品基本信息 -->
+	<select id="selectNewFivesCommoditys" resultMap="indexCommodityMap">
+		SELECT
+			ec.id,
+			ec.name,
+			ec.price,
+			ec.home_picture
+		FROM
+			e_commodity ec
+		WHERE
+			ec.put_shelves=1
+		AND
+			ec.new_product=1
+		LIMIT
+			5
+	</select>
+	
+	<!-- 查询五条精品商品基本信息 -->
+	<select id="selectBoutiqueFivesCommoditys" resultMap="indexCommodityMap">
+		SELECT
+			ec.id,
+			ec.name,
+			ec.price,
+			ec.home_picture
+		FROM
+			e_commodity ec
+		WHERE
+			ec.put_shelves=1
+		AND
+			ec.boutique=1
+		LIMIT
+			5
+	</select>
+	
+	
+	
+	
+	<resultMap type="CommodityDto" id="detailsCommodityMap">
+		<id column="commodity_id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="price" property="price"/>
+		<result column="market_price" property="marketPrice"/>
+		<result column="point" property="point"/>
+		<result column="description" property="description"/>
+		<result column="home_picture" property="homePicture"/>
+		<result column="screenshots" property="screenshots"/>
+		<association property="parameters" javaType="ParameterDto">
+			<id column="parameter_id" property="id"/>
+			<result column="parameter_json" property="parameterJson"/>
+		</association>
+	</resultMap>
+	<!--  根据商品ID获取商品详细信息 -->
+	<select id="selectDetailsCommodityById" parameterType="Long" resultMap="detailsCommodityMap">
+		SELECT
+			ec.id AS commodity_id,
+			ec.name,
+			ec.price,
+			ec.market_price,
+			ec.point,
+			ec.description,
+			ec.home_picture,
+			ec.screenshots,
+			ep.id AS parameter_id,
+			ep.parameter_json
+		FROM
+			e_commodity ec
+		INNER JOIN
+			e_parameter ep
+		ON
+			ec.parameter_id=ep.id
+		WHERE
+			ec.put_shelves=1
+		AND
+			ec.id=#{id}
+	</select>
+	
+	<!-- 根据商品ID修改库存 -->
+	<update id="updateCommodityStoreById">
+		UPDATE
+			e_commodity ec
+		SET
+			ec.store=#{store}
+		WHERE
+			ec.id=#{id}
+	</update>
+	
+	<!-- 根据关键字获取商品信息 -->
+	<select id="selectCommoditysByKeyword" resultMap="indexCommodityMap">
+		SELECT
+			ec.id,
+			ec.name,
+			ec.price,
+			ec.home_picture
+		FROM
+			e_commodity ec
+		WHERE
+			ec.put_shelves=1
+		<if test="keyword != '' and keyword != null">
+			AND ec.name LIKE CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="brandId !=  null">
+			AND ec.brand_id = #{brandId}
+		</if>
+	</select>
+	
+	<!-- 根据商品分类ID获取商品信息 -->
+	<select id="selectAllCommodityBySortId" resultMap="indexCommodityMap">
+		SELECT
+			ec.id,
+			ec.name,
+			ec.price,
+			ec.home_picture
+		FROM
+			e_commodity ec
+		INNER JOIN
+			e_sort es
+		ON
+			ec.sort_id=es.id
+		WHERE
+			ec.put_shelves=1
+		<if test="sortId != null">
+			AND ec.sort_id=#{sortId}
+		</if>
+		<if test="parentId != null">
+			AND es.parent_sort_id=#{parentId}
+		</if>
+	</select>
+
+</mapper>

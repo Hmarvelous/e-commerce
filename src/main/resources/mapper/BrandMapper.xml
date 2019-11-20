@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+<mapper namespace="online.shixun.project.module.commodity.mapper.BrandMapper">
+	
+	<resultMap type="BrandDto" id="brandMap">
+		<id column="id" property="id"/>
+		<result column="name" property="name"/>
+	</resultMap>
+	<!-- 获取所有商品品牌信息 -->
+	<select id="selectAllBrands" resultMap="brandMap">
+		SELECT
+			eb.id,
+			eb.name
+		FROM
+			e_brand eb
+	</select>
+	
+</mapper>

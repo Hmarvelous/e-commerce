@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+<mapper namespace="online.shixun.project.module.advertise.mapper.CarouselAdMapper">
+	
+	<!-- 获取六条有效轮播广告 -->
+	<select id="selectSixEffectiveCarouselAds" resultType="CarouselAdDto">
+		SELECT
+			eca.id,
+			eca.image,
+			eca.show
+		FROM
+			e_carousel_ad eca
+		WHERE
+			eca.show=1
+		LIMIT 6
+	</select>
+	
+</mapper>

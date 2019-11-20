@@ -1,0 +1,263 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.layui-container{
+    padding: 0;
+}
+
+.clean{
+    clear: both;
+}
+
+/* 顶部导航栏开始 */
+.top-navigation-bar{
+    height: 32px;
+    background-color: #F2F2F2;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+.top-container{
+    height: 32px;
+}
+.top-container>p{
+    float: left;
+    font-size: 13px;
+    color: #999999;
+    line-height: 32px;
+}
+.top-container>p>span{
+    padding-right: 5px;
+}
+.top-container>p>span>a{
+	color: #666;
+	padding: 0 5px;
+    cursor: pointer;
+	font-size: 13px;
+}
+.top-container>p>span>a:hover{
+	color: #666;
+}
+.top-container>p>a{
+    color: #999999;
+    padding-left: 10px;
+}
+.top-container>p>a:hover{
+    color: #FF0036;
+    text-decoration: underline;
+}
+
+/* 小菜单区域 */
+.top-container ul{
+    float: right;
+    font-size: 13px;
+    color: #999999;
+}
+.top-container>ul>li{
+    padding: 0 10px;
+    line-height: 32px;
+    display: inline-block;
+}
+.top-container>ul>li>a:hover{
+    color: #FF0036;
+}
+.top-container>ul>li>a>span{
+	color: #000;
+    padding: 0 2px;
+	font-size: 14px;
+    font-weight: bold;
+}
+.top-container>ul>li>a:hover > span{
+    color: #FF0036;
+}
+.top-container>ul>li>a{
+    color: #999999;
+}
+.top-container>ul>li>i{
+    padding-right: 3px;
+}
+.top-container>ul>li>span{
+    padding: 0 2px;
+    color: #666666;
+    font-weight: bold;
+}
+/* 顶部导航栏结束 */
+
+
+/* 建议登录区域开始 */
+.proposal-login-area{
+    height: 40px;
+    padding-top: 30px;
+    text-align: center;
+    background-color: #FF0066;
+}
+
+.proposal-login-area>span{
+    font-size: 14px;
+    line-height: 40px;
+}
+
+.proposal-login-area>span>a{
+    cursor: pointer;
+    color: #4b5cc4;
+    padding-right: 2px;
+}
+
+.proposal-login-area>span>a:hover{
+    text-decoration: underline;
+}
+/* 建议登录区域结束 */
+
+
+
+/* 秒杀区域开始 */
+.spike-area{
+    padding: 10px 0 60px 0;
+    background-color: #FF0066;
+}
+
+.spike-item{
+    width: 900px;
+    margin: 0 auto;
+    padding: 30px 0;
+}
+
+.spike-head{
+    height: 80px;
+    width: 890px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #FFFF44;
+    border-radius: 8px 8px 1px 1px;
+}
+
+.spike-title{
+    color: #FF0036;
+    font-size: 28px;
+    padding: 0 10px;
+    font-weight: bold;
+    line-height: 80px;
+}
+
+.spike-time{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.spike-time>a{
+    padding: 0 5px;
+    color: #FF0036;
+}
+
+.spike-commodity-list{
+    margin-top: 10px;
+}
+
+.spike-commodity-list>ul>a>li{
+    margin: 8px;
+    float: left;
+    width: 154px;
+    padding: 5px;
+    height: 230px;
+    border-radius: 1px;
+    background-color: rgb(250, 250, 250);
+}
+
+.spike-commodity-list>ul>a>li>img{
+    width: 100%;
+    height: 160px;
+    display: block;
+}
+
+.spike-commodity-list>ul>a>li>span{
+    height: 40px;
+    display: block;
+    color: #333333;
+    line-height: 40px;
+    text-align: center;
+}
+
+.immediately{
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #FFFFFF;
+    line-height: 32px;
+    border-radius: 2px;
+    text-align: center;
+    background-color: #FF3444;
+}
+
+.about-to-start{
+    cursor: auto;
+    font-weight: bold;
+}
+
+.spike-over{
+    cursor: no-drop;
+    background-color: #BBB;
+}
+
+/* 秒杀区域结束 */
+
+
+
+
+/* 底部说明开始 */
+.bottom-hr{
+    margin-top: 20px;
+}
+
+.description-box{
+    height: 100px;
+    margin-bottom: 50px;
+}
+
+.description-box>ul>li{
+    float: left;
+    width: 290px;
+    height: 100px;
+    margin: 0 1px;
+    text-align: center;
+}
+
+.description-box>ul>li>span.shorthand{
+    display: block;
+    float: left;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    color: #FF0036;
+    margin-top: 25px;
+    font-weight: bold;
+    line-height: 45px;
+    margin-left: 40px;
+    border-radius: 25px;
+    border: 2px solid #FF0036;
+}
+
+.description-box>ul>li>span.description{
+    float: left;
+    margin-top: 25px;
+    margin-left: 15px;
+}
+
+.description-box>ul>li>span.description>a{
+    line-height: 25px;
+    text-align: left;
+}
+
+.description-box>ul>li>span.description>a:first-child{
+    display: block;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.description-box>ul>li>span.description>a:nth-child(2){
+    color: #999;
+    font-size: 15px;
+    font-weight: bold;
+}
+/* 底部说明结束 */

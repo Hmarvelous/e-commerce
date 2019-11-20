@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/static/css/login.css}">
+</head>
+<body>
+    
+    <!-- 顶部导航栏 -->
+    <div class="top-navigation-bar">
+        <div class="layui-container top-container">
+            <!-- 登录注册区域 -->
+            <p>
+                <i class="layui-icon layui-icon-home"></i><a th:href="@{/index}">商城首页</a>
+                <span>欢迎<a th:if="${username} != null" th:text="${username}"></a>来到名博商城网</span>
+                <a th:if="${username == null}" th:href="@{/member/login}">请登录</a>
+                <a th:if="${username == null}" th:href="@{/member/register}">免费注册</a>
+                <a th:if="${username != null}" th:href="@{/logout}">退出</a>
+            </p>
+
+            <!-- 小菜单区域 -->
+            <ul>
+                <li>
+                	<i class="layui-icon layui-icon-cart" style="font-size: 16px;color: #FF0036;"></i>
+                	<a th:href="@{/cart}">购物车
+                		<span th:if="${cartCount != null}" th:text="${cartCount}" id="cart-count">0</span>
+                		<span th:if="${cartCount == null}" id="cart-count">0</span>件
+                	</a>
+                </li>
+                <li><a th:href="@{/order}">我的订单</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 登录区域 -->
+    <div class="layui-container login-back">
+        <div class="login-box">
+            <div class="login-title">密码登录</div>
+            <div class="login-input">
+            	<form th:action="@{/login}" method="POST">
+	                <div class="input-box"><div><i class="layui-icon layui-icon-username"></i></div><input type="text" id="username" name="username" placeholder="会员名/邮箱/手机号" th:value="admin"></div>
+	                <div class="input-box"><div><i class="layui-icon layui-icon-password"></i></div><input type="password" id="password" name="password" th:value="123456"></div>
+	                <div class="input-box"><button id="login-button" type="submit">登录</button></div>
+                </form>
+                <div class="other-option"><a href="#">忘记密码</a><a href="#">忘记会员名</a><a th:href="@{/member/register}">免费注册</a></div>
+            </div>
+
+            <span th:if="${code!=null}" id="error-info"><i class="layui-icon layui-icon-close"></i><a th:text="${code}">登陆失败</a></span>
+        </div>
+
+        <!-- 清除浮动 -->
+        <div class="clean"></div>
+    </div>
+
+
+
+    <!-- 引入JS -->
+    <script th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <script th:src="@{/static/js/login.js}"></script>
+
+</body>
+</html>

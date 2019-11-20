@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+	PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+	
+<mapper namespace="online.shixun.project.module.member.mapper.MemberMapper">
+
+	<resultMap type="MemberDto" id="baseMemberMap">
+		<id column="id" property="id"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="email" property="email"/>
+		<result column="balance" property="balance"/>
+		<result column="point" property="point"/>
+		<result column="freeze" property="freeze"/>
+	</resultMap>
+	<!-- 根据用户名查询用户信息 -->
+	<select id="selectMemberByUsername" parameterType="String" resultMap="baseMemberMap">
+		SELECT
+			em.id,
+			em.username,
+			em.password,
+			em.email,
+			em.balance,
+			em.point,
+			em.freeze
+		FROM
+			e_member em
+		WHERE
+			em.username=#{username}
+	</select>
+	
+	<!-- 更新会员信息 -->
+	<update id="updateMember">
+		UPDATE
+			e_member em
+		SET
+			em.username=#{member.username},
+			em.password=#{member.password},
+			em.email=#{member.email},
+			em.balance=#{member.balance},
+			em.point=#{member.point},
+			em.freeze=#{member.freeze}
+		WHERE
+			em.id=#{member.id}
+	</update>
+	
+	<!-- 添加会员 -->
+	<insert id="insertMember">
+		INSERT INTO
+			e_member(username,password,email)
+		VALUES
+			(#{member.username},#{member.password},#{member.email})
+	</insert>
+
+</mapper>

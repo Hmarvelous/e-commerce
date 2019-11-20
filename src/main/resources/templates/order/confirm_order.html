@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>确认订单</title>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/static/css/confirm_order.css}">
+    <link rel="stylesheet" th:href="@{/static/css/pop-ups.css}">
+</head>
+<body>
+    
+    <!-- 顶部导航栏 -->
+    <div class="top-navigation-bar">
+        <div class="layui-container top-container">
+            <!-- 登录注册区域 -->
+            <p>
+                <i class="layui-icon layui-icon-home"></i><a th:href="@{/index}">商城首页</a>
+                <span>欢迎<a th:if="${username} != null" th:text="${username}"></a>来到名博商城网</span>
+                <a th:if="${username == null}" th:href="@{/member/login}">请登录</a>
+                <a th:if="${username == null}" th:href="@{/member/register}">免费注册</a>
+                <a th:if="${username != null}" th:href="@{/logout}">退出</a>
+            </p>
+
+            <!-- 小菜单区域 -->
+            <ul>
+                <li>
+                	<i class="layui-icon layui-icon-cart" style="font-size: 16px;color: #FF0036;"></i>
+                	<a th:href="@{/cart}">购物车
+                		<span th:if="${cartCount != null}" th:text="${cartCount}" id="cart-count">0</span>
+                		<span th:if="${cartCount == null}" id="cart-count">0</span>件
+                	</a>
+                </li>
+                <li><a th:href="@{/order}">我的订单</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- 流程区域 -->
+    <div class="layui-container process-area">
+        <div class="logo-box">
+            <img th:src="@{/static/logo.png}" alt="">
+        </div>
+        <div class="process">
+            <div class="through">
+                <span class="number-span">1</span>
+                <span class="title-span">确定订单</span>
+                <span class="line-span"></span>
+            </div>
+            <div>
+                <span class="number-span">2</span>
+                <span class="title-span">付款</span>
+                <span class="line-span"></span>
+            </div>
+            <div>
+                <span class="number-span">3</span>
+                <span class="title-span">确认收货</span>
+                <span class="line-span"></span>
+            </div>
+            <div>
+                <span class="number-span">4</span>
+                <span class="title-span">评价</span>
+            </div>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+        </div>
+    </div>
+
+
+
+    <!-- 地址选择区域 -->
+    <div class="layui-container address-selection-area">
+        <div class="address-title">
+            <span>选择收货地址</span>
+        </div>
+        <div class="address-area">
+            <ul>
+            
+                <!-- 地址项 -->
+                <li th:each="receiver,status : ${receivers}" th:class="${status.index == 0} ? 'address-selected' : ''" th:id="${receiver.id}">
+                    <span class="address-header"><a th:text="${receiver.areaAddress[0]} + ${receiver.areaAddress[1]}"></a>&nbsp;&nbsp;(<a th:text="${receiver.name}"></a>收)</span>
+                    <span class="address-detailed">
+                    	<a th:each="address : ${receiver.areaAddress}" th:text="${address}"></a>
+                    	<a th:text="${receiver.detailedAddress}"></a>
+                    	<a th:text="${receiver.phone}"></a>
+                    </span>
+                    <i th:if="${receiver.defaultAddress}" class="default-address">默认地址</i>
+                </li>
+                
+            </ul>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+            <div class="show-all-address"><a>显示全部地址</a></div>
+        </div>
+    </div>
+
+
+
+    <!-- 订单信息区域 -->
+    <div class="layui-container order-area">
+        <div class="order-area-header"><span>确认订单信息</span></div>
+        <div class="order-list-header">
+            <ul>
+                <li>商品</li>
+                <li>商品属性</li>
+                <li>单价</li>
+                <li>数量</li>
+                <li>优惠方式</li>
+                <li>小计</li>
+            </ul>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+        </div>
+        <!-- 订单项 -->
+        <div class="order-list-box" th:data-order-number="0">
+            <ul>
+            	<!-- 项 -->
+                <li th:each="order : ${orders}" th:id="${order.commodity.id}">
+                    <ul>
+                        <li>
+                            <img th:src="@{/static/commodity/{image}(image=${order.commodity.homePicture})}" alt="">
+                            <span th:text="${order.commodity.name}"></span>
+                        </li>
+                        <li class="parameter">
+                        	<!-- 商品参数 -->
+                            <span th:each="parameter : ${order.parameterJSONArray}" th:text="${parameter}"></span>
+                        </li>
+                        <li><span th:data-price="${order.unitPrice}" th:class="${order.preferentialWay == 1} ? 'delete-line' : ''" th:text="${order.unitPriceString}">0.00</span></li>
+                        <li><span th:text="${order.count}" class="commodity-count">0</span></li>
+                        <li><span th:if="${order.preferentialWay == 1}" class="preferential-way" th:data-way="${order.preferentialWay}">秒杀抢购</span></li>
+                        <li><span th:data-price="${order.actualAmount}" th:text="${order.actualAmountString}">0.00</span></li>
+                    </ul>
+                    <!-- 清除浮动 -->
+                    <div class="clean"></div>
+                </li>
+                
+            </ul>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+            
+            <!-- 留言 -->
+            <div class="leave-comments">
+                <span>给卖家留言：</span><textarea name="comments" placeholder="选填"></textarea>
+            </div>
+        </div>
+
+        
+        <!-- 结算区域 -->
+        <div class="settlement-area">
+            <div th:each="receiver : ${receivers}" th:if="${receiver.defaultAddress}" class="statistics-box">
+                <span class="total-amount">实付款：<a style="color: #999;">¥</a><a th:text="${actualAmount}">0.00</a></span>
+                <span class="send-address">寄送至：<a th:each="address : ${receiver.areaAddress}" th:text="${address}"></a>
+                								 <a th:text="${receiver.detailedAddress}"></a></span>
+                <span class="receiver">收货人：<a th:text="${receiver.name}"></a><a th:text="${receiver.phone}"></a></span>
+            </div>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+            <div class="settlement-button">提交订单</div>
+            <!-- 清除浮动 -->
+            <div class="clean"></div>
+        </div>
+    </div>
+
+
+    <hr class="bottom-hr">
+    <!-- 底部说明 -->
+    <div class="layui-container description-box">
+        <ul>
+            <li>
+                <span class="shorthand">优</span>
+                <span class="description"><a>品质保障</a><a>品质护航&nbsp;&nbsp;购买无忧</a></span>
+            </li>
+            <li>
+                <span class="shorthand">七</span>
+                <span class="description"><a>七天无理由退换货</a><a>为您提供售后无忧保障</a></span>
+            </li>
+            <li>
+                <span class="shorthand">特</span>
+                <span class="description"><a>特色服务体验</a><a>为您呈现不一样的服务</a></span>
+            </li>
+            <li>
+                <span class="shorthand">帮</span>
+                <span class="description"><a>帮助中心</a><a>您的购物指南</a></span>
+            </li>
+        </ul>
+    </div>
+
+
+    <!-- 引入JS -->
+    <script th:src="@{/static/js/jquery-3.4.1.min.js}"></script>
+    <script th:src="@{/static/layui/layui.js}"></script>
+    <script th:src="@{/static/js/pop-ups.js}"></script>
+    <script th:src="@{/static/js/confirm_order.js}"></script>
+
+</body>
+</html>
